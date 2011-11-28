@@ -3,11 +3,11 @@ var Overland = function(){
     this.type = Overland_prop.type;
     this.group = Overland_prop.group;
     this.buildings = [{
-			t: Village_prop, maxi: 5, mini: 1, generated: 0
+			t: Village_prop, maxi: 5, mini: 1
 		},{
-			t: Castle_prop, maxi: 3, mini: 1, generated: 0
+			t: Castle_prop, maxi: 3, mini: 1
 		},{
-			t: Temple_prop, maxi: 3, mini: 1, generated: 0
+			t: Temple_prop, maxi: 3, mini: 1
 	}];
     this.terrain = [Desert, Plains, Grass, Hill, Mountain, River, LowGrass, Sea];
     this.entry = "open";
@@ -21,9 +21,9 @@ var Village = function(){
     this.type = Village_prop.type;
     this.group = Village_prop.group;
     this.buildings = [{
-			t: Shop_prop, maxi: 3, mini: 1, generated: 0
+			t: Shop_prop, maxi: 3, mini: 1
 		},{
-			t: Restaurant_prop, maxi: 3, mini: 1, generated: 0
+			t: Restaurant_prop, maxi: 3, mini: 1
 	}];
     this.terrain = [Lake, Grass, LowGrass, Forest, Dirt, Concrete]
     this.entry = "open";
@@ -50,7 +50,7 @@ var Temple = function(){
     this.type = Temple_prop.type;
     this.group = Temple_prop.group;
     this.buildings = [{
-			t: Sanctuary_prop, maxi: 1, mini: 0, generated: 0
+			t: Sanctuary_prop, maxi: 1, mini: 1
 	}];
     this.terrain = [Concrete, Floor];
     this.entry = "open";
@@ -88,7 +88,7 @@ var Sanctuary = function(){
     this.type = Sanctuary_prop.type;
     this.group = Sanctuary_prop.group;
     this.buildings = [{
-			t: Gateway_prop, maxi: 1, mini: 0, generated: 0
+			t: Gateway_prop, maxi: 1, mini: 0
 	}];
     this.terrain = [Floor];
     this.entry = "open";

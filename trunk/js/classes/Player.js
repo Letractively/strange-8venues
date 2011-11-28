@@ -38,7 +38,6 @@ var Player = function(name){
 		
 		// Update buttons
 		input.updateActionButtons(Squares[curr]);
-		input.updateDirectionButtons(this.coords);
 	};
 	
 	this.updateStatus = function(c){

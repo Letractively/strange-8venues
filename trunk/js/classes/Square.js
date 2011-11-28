@@ -28,48 +28,6 @@ var Square = function(loc, maxSquares){
 		}
 		this.passable = this.t.passable;
 		this.onMap.find('.t').addClass(this.t.type);
-		
-		// Buildings
-		var buildings = activeMap.buildings;
-		var chance = getRandom(100);
-		if(	chance > 70 && this.t.buildings == true && buildings.length > 0 ){
-			// MAXIMUMS DONE...HOW TO CHECK FOR MINIMUMS?
-			// Check if this map is all full building-wise
-			var allFull = 0;
-			for(afi=0; afi<buildings.length; afi++){
-				if (buildings[afi].generated >= buildings[afi].maxi){
-					allFull++;
-				}
-			}
-			// If all buildings haven't been generated
-			if (allFull < buildings.length){
-				var rand = getRandom(buildings.length);
-				var bldg = buildings[rand];
-				while(bldg.t.generated >= bldg.t.maxi || bldg.generated >= bldg.maxi){
-					var rand = getRandom(buildings.length);
-					var bldg = buildings[rand];
-				}
-				var prevSq = this.id-1;
-				prevSq < 0 ? prevSq = 0 : ''
-				var abovSq = this.id-activeMap.startCols;
-				abovSq < 0 ? abovSq = 0 : ''
-				/*
-					Generate building if:
-						a) fewer than max total existing
-						b) fewer than max for this map
-						c) no building directly above/beside it
-				*/
-				if(Squares[prevSq].b == undefined && Squares[abovSq].b == undefined){
-					this.b = bldg.t;
-					this.onMap.find('.b').addClass(this.b.type);
-					bldg.t.generated++;
-					bldg.generated++;
-				}
-			}
-			// Build out locations here - generate everything from the start?
-		}
-		
-		// Items
 	};
 	this.lookAround = function(){
 		var vicinitySet = true;

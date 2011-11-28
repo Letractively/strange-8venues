@@ -1,37 +1,36 @@
-// Capture input
 var Input = function(){
 	/*
 		Functions to bind to
 	*/
 		// Capture mobile tap
-                this.doMapClick = function(e){
-                                e.preventDefault();
-                                e.stopPropagation();
-                                var oe = e.originalEvent;
-                                if(oe.targetTouches){
-                                                oe = oe.changedTouches[0]; // changedTouches to capture touchend
-                                }
-                                myPos = Squares[me.currentSquare].onMap.offset();
-                                offX = Math.abs(oe.pageX-myPos.left);
-                                offY = Math.abs(oe.pageY-myPos.top);
-                                if(offX > offY){
-                                if(oe.pageX > myPos.left) { me.move('right'); }
-                                else { me.move('left'); }
-                                } else {
-                                if(oe.pageY > myPos.top) { me.move('down'); }
-                                else { me.move('up'); }
-                                }
-                };
+		this.doMapClick = function(e){
+			e.preventDefault();
+			e.stopPropagation();
+			var oe = e.originalEvent;
+			if(oe.targetTouches){
+				oe = oe.changedTouches[0]; // changedTouches to capture touchend
+			}
+			myPos = Squares[me.currentSquare].onMap.offset();
+			offX = Math.abs(oe.pageX-myPos.left);
+			offY = Math.abs(oe.pageY-myPos.top);
+			if(offX > offY){
+				if(oe.pageX > myPos.left) { me.move('right'); }
+				else { me.move('left'); }
+				} else {
+				if(oe.pageY > myPos.top) { me.move('down'); }
+				else { me.move('up'); }
+			}
+		};
 		
 		// Bind actions to map
 		this.unbindFromMap = function(){
 			doc.unbind('keyup');
-			mapContainerCell.unbind('click touchend');
+			mapContainerCell.unbind('touchend');
 		};
 		
 		this.bindToMap = function(){
 			doc.bind('keyup', this.doKeyUp);
-			mapContainerCell.bind('click touchend', this.doMapClick);
+			mapContainerCell.bind('touchend', this.doMapClick);
 		};
 		
 		// Wait
@@ -80,23 +79,17 @@ var Input = function(){
 			k.preventDefault();
 			switch (k.which) {
 				// return
-				case 13: 
-					wait(); break;
+				case 13: wait(); break;
 				// spacebar (enter bldg)
-				case 32: 
-					enterLoc(); break;
+				case 32: enterLoc(); break;
 				// left
-				case 37:
-					btnDirW.click(); break;
+				case 37: moveLeft(); break;
 				// up
-				case 38:
-					btnDirN.click(); break;
+				case 38: moveUp(); break;
 				// right
-				case 39: 
-					btnDirE.click(); break;
+				case 39: moveRight(); break;
 				// down
-				case 40: 
-					btnDirS.click(); break;
+				case 40: moveDown(); break;
 				default: break;
 			}
 		};
@@ -115,11 +108,6 @@ var Input = function(){
 			disabled: true,
                         text: false
 		});
-		// Direction Buttons// Direction Buttons
-		btnDirN.button({icons: {primary:iconN,secondary:''}});
-		btnDirE.button({icons: {primary:iconE,secondary:''}});
-		btnDirS.button({icons: {primary:iconS,secondary:''}});
-		btnDirW.button({icons: {primary:iconW,secondary:''}});
 		
 		// High-level connectors
 		var moveUp = function(){ me.move('up'); };
@@ -127,18 +115,7 @@ var Input = function(){
 		var moveDown = function(){ me.move('down'); };
 		var moveLeft = function(){ me.move('left'); };
 		
-		// Click events
-		btnDirN.click(function(e){moveUp();});
-		btnDirE.click(function(e){moveRight();});
-		btnDirS.click(function(e){moveDown();});
-		btnDirW.click(function(e){moveLeft();});
-		btnEnter.click(function(e){enterLoc();});
-		
 		// Touch events
-		btnDirN.bind('touchend', function(e){e.preventDefault(); moveUp();});
-		btnDirE.bind('touchend', function(e){e.preventDefault(); moveRight();});
-		btnDirS.bind('touchend', function(e){e.preventDefault(); moveDown();});
-		btnDirW.bind('touchend', function(e){e.preventDefault(); moveLeft();});
 		btnEnter.bind('touchend', function(e){e.preventDefault(); enterLoc();});
 	
 		// Update Action Buttons
@@ -148,40 +125,6 @@ var Input = function(){
 		this.updateActionButtons = function(s){
 			s.b != undefined ? updateBtnState(btnEnter, false) : updateBtnState(btnEnter, true)
 		};
-		
-		// Update Diretion Buttons
-		var resetDirectionButtons = function() {
-			btnDirN.removeClass('ui-state-focus');btnDirE.removeClass('ui-state-focus');btnDirS.removeClass('ui-state-focus');btnDirW.removeClass('ui-state-focus');
-			btnDirN.button( "option", "icons", {primary:iconN,secondary:''});
-			btnDirE.button( "option", "icons", {primary:iconE,secondary:''});
-			btnDirS.button( "option", "icons", {primary:iconS,secondary:''});
-			btnDirW.button( "option", "icons", {primary:iconW,secondary:''});
-		}
-		// s -> square, b -> button, i -> icon
-		var checkDirection = function(s, b, i) {
-			if(!s||!s.t.passable){
-				updateBtnState(b, true);
-				if(s==false){ 
-					if(activeMap.type != "overland") {
-						updateBtnState(b, false);
-						b.button( "option", "icons", {primary:i, secondary:''} );
-					} else { updateBtnState(b, true) ;}
-				}
-			} else { updateBtnState(b, false); }
-		};
-		this.updateDirectionButtons = function(c){	
-			resetDirectionButtons();
-			var s;
-			// Check N
-			c[1]--; s = getSquare(c); checkDirection(s, btnDirN, iconNstop); c[1]++;
-			// Check E
-			c[0]++; s = getSquare(c); checkDirection(s, btnDirE, iconEstop); c[0]--;
-			// Check S
-			c[1]++; s = getSquare(c); checkDirection(s, btnDirS, iconSstop); c[1]--;
-			// Check W
-			c[0]--; s = getSquare(c); checkDirection(s, btnDirW, iconWstop); c[0]++;
-		};
-	
 	/*
 		Map Drag (touch)
 	*/
@@ -190,7 +133,7 @@ var Input = function(){
 				e.preventDefault();
                                 e.stopPropagation();
 				var oe = e.originalEvent;
-                                if(oe.targetTouches.length != 1){
+                if(oe.targetTouches.length != 1){
 					return false;
 				}
 				var touch = oe.targetTouches[0];
@@ -208,9 +151,9 @@ var Input = function(){
 				});
 				mg.bind('touchend', function(e){
 					e.preventDefault();
-                                        if(Math.abs(mg.position().left - startX)<10 && Math.abs(mg.position().top - startY) <10){
-                                                input.doMapClick(e); // do a map click if the movement is incidental
-                                        }
+					if(Math.abs(mg.position().left - startX)<10 && Math.abs(mg.position().top - startY) <10){
+							input.doMapClick(e); // do a map click if the movement is incidental
+					}
 					mg.unbind('touchmove touchend');
                                         return false;
 				});
