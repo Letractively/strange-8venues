@@ -45,32 +45,70 @@ var Map = function(){
 		me.location = m.type;
 		me.coords = m.startLoc;
 		
-		// Create a map
+		// Generate map
 		setIdent(m.id);
 		m.mapGrid = newGrid();
 		mapContainer.append(m.mapGrid);
 		m.mg = getGrid();
-		for (i=0; i<m.startRows; i++) {
-			m.mg.append(newRow(i));
-			var row = getRow(i);
-			var gridRow = [i];
-			m.grid.push(gridRow);
-			for (j=0; j<m.startCols; j++) {
-				var tc = [j,i];
-				var p = false;
-				if(dir == undefined){
-					if (tc.toString()==m.startLoc.toString()) { p = true; }
-				} else {
-					for(k=0; k<startSquares.length; k++){
-						if (tc.toString()==startSquares[k].toString()) { p = true; }
+			// Generate Squares+Terrain
+			for (i=0; i<m.startRows; i++) {
+				m.mg.append(newRow(i));
+				var row = getRow(i);
+				for (j=0; j<m.startCols; j++) {
+					var tc = [j,i];
+					var p = false;
+					if(dir == undefined){
+						if (tc.toString()==m.startLoc.toString()) { p = true; }
+					} else {
+						for(k=0; k<startSquares.length; k++){
+							if (tc.toString()==startSquares[k].toString()) { p = true; }
+						}
+					}
+					var n = new Square([j, i]);
+					n.addToRow(row, false, p);
+				}
+			}
+			// Generate Buildings
+			var buildings = activeMap.buildings;
+				// Create array for occupied squares
+				var occupado = [];
+			for(var bi=0; bi<buildings.length; bi++){
+				var total_bldgs_remaining = buildings[bi].t.maxi - buildings[bi].t.generated;
+				if(total_bldgs_remaining > 0){
+					var bldg_max;
+					// If the bldg maximum is greater than what's left, set max to what's left
+					if(buildings[bi].maxi >= total_bldgs_remaining) {
+						bldg_max = total_bldgs_remaining;
+					} else { bldg_max = buildings[bi].maxi; }
+					
+					// Get a random count based on max available
+					var bldg_count = getRandom(bldg_max+1);
+					
+					// If the count is less than the minimum reqd, set it for the minimum
+					// This may overstep the stated maximum, but will only do so once per building type
+					if(bldg_count < buildings[bi].mini) {
+						bldg_count = buildings[bi].mini;
+					}
+					
+					// If there's only one of a location overall, make sure it gets generated
+					if(buildings[bi].t.maxi == 1) {
+						bldg_count = 1;
+					}
+
+					for(var bc=0; bc<bldg_count; bc++){
+						do{
+							var maybe_here = [getRandom(m.startCols), getRandom(m.startRows)];
+							var bldg_location = getSquare(maybe_here);
+							var bldg_square = getSquareId(maybe_here);
+						}
+						while(bldg_location.passable == false || $.inArray(bldg_square, occupado) >= 0)
+						occupado.push(bldg_square);
+						bldg_location.b = buildings[bi].t;
+						bldg_location.b.generated++; // add to total generated
+						bldg_location.onMap.find('.b').addClass(bldg_location.b.type);
 					}
 				}
-				var n = new Square([j, i]);
-				n.addToRow(row, false, p);
-				var gridCol = [j];
-				m.grid[i].push(gridCol);
 			}
-		}
 		
 		// Place player
 		me.currentSquare = getSquare(me.coords).id;

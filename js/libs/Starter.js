@@ -26,17 +26,6 @@ var LeftColumn = $('#bottom_cell');
 LeftColumn.append('<div id="button_container"></div>');
 var ButtonContainer = $('#button_container');
 	// Add buttons to container
-	ButtonContainer.append('<div id="btn_dir_n" class="button directional"></div>');
-	ButtonContainer.append('<div id="btn_dir_w" class="button directional"></div>');
-	ButtonContainer.append('<div id="btn_dir_e" class="button directional"></div>');
-	ButtonContainer.append('<div id="btn_dir_s" class="button directional"></div>');
-	
-	var btnDirN = $('#btn_dir_n'); var iconN = 'ui-icon-arrowthick-1-n'; var iconNstop = 'ui-icon-arrowthickstop-1-n';
-	var btnDirE = $('#btn_dir_e'); var iconE = 'ui-icon-arrowthick-1-e'; var iconEstop = 'ui-icon-arrowthickstop-1-e';
-	var btnDirS = $('#btn_dir_s'); var iconS = 'ui-icon-arrowthick-1-s'; var iconSstop = 'ui-icon-arrowthickstop-1-s';
-	var btnDirW = $('#btn_dir_w'); var iconW = 'ui-icon-arrowthick-1-w'; var iconWstop = 'ui-icon-arrowthickstop-1-w';
-
-	// Add buttons to container
 	ButtonContainer.append('<div id="btn_inventory" class="button action">Inventory</div>');
 	ButtonContainer.append('<div id="btn_enter" class="button action">Enter</div>');
 	var btnInventory = $('#btn_inventory');

@@ -26,6 +26,12 @@ var getSquare = function(c){
 			return s;
 		} else { return false; }
 	};
+var getSquareId = function(c){
+	var s = $('#c_'+c[0]+'_'+c[1]+'_'+ident).attr('data-sID');
+	if(s != undefined){
+			return s;
+		} else { return false; }
+}
 
 // Grid helpers
 var newGrid = function(){
