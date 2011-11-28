@@ -268,19 +268,12 @@ body {
 	height: 30px;
 	display: inline-block;
 }
-#button_container .button.directional {
-	width: 30px;
-}
-#button_container .button.action {
-	position: relative;
-	top: -11px;
-}
 
 /* Map container */
 #map_container_cell {
 	border: 1px solid #FFF;
 	overflow: hidden;
-	background-color: #3e7f8f;
+	/*background-color: #3e7f8f;*/
 	vertical-align: top;
 }
 #map_container {
