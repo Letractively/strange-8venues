@@ -1,3 +1,4 @@
+// Capture input
 var Input = function(){
 	/*
 		Functions to bind to
