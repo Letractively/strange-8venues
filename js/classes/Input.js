@@ -69,7 +69,7 @@ var Input = function(){
 			if(sq.b != undefined){
 				previousMaps.push(activeMap);
 				Map.saveMe(activeMap);
-				LoadMap(sq.b.obj, sq.b.group);
+				LoadMap(sq);
 			}
 		};
 		
@@ -93,30 +93,72 @@ var Input = function(){
 				default: break;
 			}
 		};
-	
+	/*
+		Show / Hide dialogs
+	*/
+		var M_Dialog = function(type) {
+			var M_D;
+			input.unbindFromMap();
+			switch(type){
+				case "inventory" 	: M_D = D_Inventory; break;
+				case "notes" 		: M_D = D_Notes; break;
+				case "options" 		: M_D = D_Options; break;
+				case "help" 		: M_D = D_Help; break;
+				default: break;
+			}
+			oDialog.html(M_D.content);
+			oDialog.dialog({
+				open: M_D.open,
+				close: function(){
+					input.bindToMap();
+				},
+				buttons: M_D.buttons,
+				title: capIt(type),
+				modal: true
+			});
+		}
 	/*
 		Bindings and such
 	*/
-		// Action Buttons
-		btnInventory.button({
-			icons: {primary:'ui-icon-suitcase',secondary:''},
-			disabled: true,
-                        text: false
-		});
-		btnEnter.button({ 
-			icons: {primary:'ui-icon-home',secondary:''},
-			disabled: true,
-                        text: false
-		});
-		
 		// High-level connectors
 		var moveUp = function(){ me.move('up'); };
 		var moveRight = function(){ me.move('right'); };
 		var moveDown = function(){ me.move('down'); };
 		var moveLeft = function(){ me.move('left'); };
 		
+		// Action Buttons
+		btnInventory.button({
+			icons: {primary:'ui-icon-suitcase',secondary:''},
+			disabled: true,
+			text: false
+		});
+		btnNotes.button({
+			icons: {primary:'ui-icon-note',secondary:''},
+			disabled: false,
+			text: false
+		});
+		btnEnter.button({ 
+			icons: {primary:'ui-icon-home',secondary:''},
+			disabled: true,
+			text: false
+		});
+		btnOpts.button({ 
+			icons: {primary:'ui-icon-wrench',secondary:''},
+			disabled: false,
+			text: false
+		});
+		btnHelp.button({ 
+			icons: {primary:'ui-icon-lightbulb',secondary:''},
+			disabled: false,
+			text: false
+		});
+		
 		// Touch events
-		btnEnter.bind('touchend', function(e){e.preventDefault(); enterLoc();});
+		btnInventory.bind('click touchend', function(e){e.preventDefault(); M_Dialog('inventory');});
+		btnNotes.bind('click touchend', function(e){e.preventDefault(); M_Dialog('notes');});
+		btnEnter.bind('click touchend', function(e){e.preventDefault(); enterLoc();});
+		btnOpts.bind('click touchend', function(e){e.preventDefault(); M_Dialog('options');});
+		btnHelp.bind('click touchend', function(e){e.preventDefault(); M_Dialog('help');});
 	
 		// Update Action Buttons
 		var updateBtnState = function(b, val){
@@ -174,7 +216,8 @@ var Input = function(){
 			centerOn(me);
 		});
 		// Make everything unselectable
-		$('body *').bind('selectstart', function(){return false;});
+		//$('body *').bind('selectstart', function(){return false;});
+		//$('textarea').bind('selectstart', function(){return true;});
 	
 	/*
 		Init

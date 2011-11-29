@@ -269,6 +269,22 @@ body {
 	display: inline-block;
 }
 
+/* Dialogs */
+#dialog textarea {
+	font-size: 11px !important;
+	border: none;
+	width: 95%;
+	height: 95%;
+	padding: 10px;
+	background-color: #DDD;
+	color: #333;
+}
+#dialog label {
+	font-size: 11px !important;
+	position: relative;
+	top: -2px;
+}
+
 /* Map container */
 #map_container_cell {
 	border: 1px solid #FFF;
@@ -346,6 +362,7 @@ body {
 /* NPCs */
 
 /* Buildings */
+.m_grid td.lit .b.portal:after { content: '[X]'; background-color: #FFF; color: #0F0; }
 .m_grid td.lit .b.house:after { content: '[H]'; background-color: #5d3f00; }
 .m_grid td.lit .b.shop:after { content: '[S]'; background-color: #a87e00; }
 .m_grid td.lit .b.restaurant:after { content: '[R]'; background-color: #9500c6; }
@@ -356,19 +373,19 @@ body {
 .m_grid td.lit .b.gateway:after { content: '[G]'; background-color: #FFF; color: #000; }
 
 /* Terrain */
-.m_grid td.lit .t.desert:after { content: "..."; background-color: #d9b46a; }
-.m_grid td.lit .t.plains:after { content: "\BA \ "; background-color: #B87700; }
-.m_grid td.lit .t.grass:after { content: "░"; background-color: #7e9b2e; }
-.m_grid td.lit .t.sea:after { content: ""; background-color: #3e7f8f; font-weight: bold; }
-.m_grid td.lit .t.river:after { content: "~"; background-color: #a0cdca; }
-.m_grid td.lit .t.mountain:after { content: "▲"; background-color: #6e3519;}
-.m_grid td.lit .t.hill:after { content: "▲"; background-color: #97793f; font-size:8px; }
+.m_grid td.lit .t.desert:after, .desert { content: "..."; background-color: #d9b46a; }
+.m_grid td.lit .t.plains:after, .plains { content: "\BA \ "; background-color: #B87700; }
+.m_grid td.lit .t.grass:after, .grass { content: "░"; background-color: #7e9b2e; }
+.m_grid td.lit .t.sea:after, .sea { content: ""; background-color: #3e7f8f; font-weight: bold; }
+.m_grid td.lit .t.river:after, .river { content: "~"; background-color: #a0cdca; }
+.m_grid td.lit .t.mountain:after, .mountain { content: "▲"; background-color: #6e3519;}
+.m_grid td.lit .t.hill:after, .hill { content: "▲"; background-color: #97793f; font-size:8px; }
 
-.m_grid td.lit .t.low_grass:after { content: "-"; background-color: #B8B894;}
-.m_grid td.lit .t.concrete:after { content: "+"; background-color: #CCC; font-size:8px; }
-.m_grid td.lit .t.forest:after { content: "^"; background-color: #0B360B;}
-.m_grid td.lit .t.dirt:after { content: "░"; background-color: #A37547; font-size:8px; }
-.m_grid td.lit .t.lake:after { content: "~"; background-color: #a0cdca; }
+.m_grid td.lit .t.low_grass:after, .low_grass { content: "-"; background-color: #B8B894;}
+.m_grid td.lit .t.concrete:after, .concrete { content: "+"; background-color: #CCC; font-size:8px; }
+.m_grid td.lit .t.forest:after, .forest { content: "^"; background-color: #0B360B;}
+.m_grid td.lit .t.dirt:after, .dirt { content: "░"; background-color: #A37547; font-size:8px; }
+.m_grid td.lit .t.lake:after, .lake { content: "~"; background-color: #a0cdca; }
 
 .m_grid td.lit .t.floor:after { content: "'"; background-color: #000; font-size:8px; }
 

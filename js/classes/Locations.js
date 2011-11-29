@@ -38,10 +38,11 @@ var Castle = function(){
     this.group = Castle_prop.group;
     this.buildings = [];
     this.terrain = [Concrete, Floor, Dirt];
-    this.entry = "open";
+    this.entry = "closed";
     this.max = {total:3, perMap:3};
     this.startRows = getRandom(7)+3;
     this.startCols = getRandom(7)+3;
+	this.walled = true;
 };
 var Castle_prop = { type: "castle", obj: Castle, group: Castles, maxi: 3, mini: 1, generated: 0 };
 
