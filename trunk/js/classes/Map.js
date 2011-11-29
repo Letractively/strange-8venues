@@ -1,4 +1,7 @@
-var LoadMap = function(MapType, Group){
+var LoadMap = function(s){
+	var MapType = s.b.obj;
+	var Group = s.b.group;
+	var terr = s.t;
 	if(activeMap == "none") {
 		var id = 0;
 	} else { var id = activeMap.lastID; }
@@ -14,19 +17,22 @@ var LoadMap = function(MapType, Group){
 	}
 	if(exists == false) {
 		var m = new MapType();
-		Map.init(m, id);
+		//alert(terr.type);
+		Map.init(m, id, terr);
 	}
 };
 var Map = function(){
 	// m-> map
-	this.init = function(m, id){
+	this.init = function(m, id, terr){
 		activeMap = m;
 		m.id = id;
 		m.grid = [];
 		var dir = me.lastDir;
 		if(dir == undefined){
-			var startX = getRandom(m.startCols);
-			var startY = getRandom(m.startRows);
+			var startX = getRandom(m.startCols-1);
+			var startY = getRandom(m.startRows-1);
+			startX == 0 ? startX = 1 : ""
+			startY == 0 ? startY = 1 : ""
 			m.startLoc=[startX, startY];
 		}
 		var startSquares = [
@@ -45,6 +51,11 @@ var Map = function(){
 		me.location = m.type;
 		me.coords = m.startLoc;
 		
+		// Set background color to match terrain
+		mapContainerCell.removeClass();
+		mapContainerCell.addClass(terr.type);
+		m.terr = terr.type;
+		
 		// Generate map
 		setIdent(m.id);
 		m.mapGrid = newGrid();
@@ -56,6 +67,7 @@ var Map = function(){
 				var row = getRow(i);
 				for (j=0; j<m.startCols; j++) {
 					var tc = [j,i];
+					// Make square passable?
 					var p = false;
 					if(dir == undefined){
 						if (tc.toString()==m.startLoc.toString()) { p = true; }
@@ -64,8 +76,13 @@ var Map = function(){
 							if (tc.toString()==startSquares[k].toString()) { p = true; }
 						}
 					}
+					// Is this a border square?
+					var t = false;
+					if(j==0 || i==0 || j==m.startCols-1 || i==m.startRows-1){
+						//t = terr;
+					}
 					var n = new Square([j, i]);
-					n.addToRow(row, false, p);
+					n.addToRow(row, false, p, t);
 				}
 			}
 			// Generate Buildings
@@ -137,6 +154,9 @@ var Map = function(){
 	// m-> map, e-> entering or exiting
 	this.loadMe = function(m, e){
 		activeMap = m;
+		// Set background color to match terrain
+		mapContainerCell.removeClass();
+		mapContainerCell.addClass(m.terr);
 		// Place player back on map
 		me.location = m.type;
 		// Set current map identity

@@ -11,7 +11,8 @@ var Map = new Map();
 var me = new Player('Graham');
 var input = new Input();
 
-LoadMap(Overland_prop.obj, Overland_prop.group);
+// Create the overland map
+Map.init(new Overland(), 0, Sea);
 
 statuss.add('You wake up.');
 $(document).ready(function(){});

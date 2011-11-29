@@ -15,7 +15,7 @@ var Square = function(loc, maxSquares){
 	this.vicinity = [];
 	this.passable;
 	
-	this.setContents = function(makePassable){
+	this.setContents = function(makePassable, terr){
 		// Terrain
 		var terrains = activeMap.terrain;
 		var rand = getRandom(terrains.length);
@@ -58,14 +58,14 @@ var Square = function(loc, maxSquares){
 		}
 		return this.vicinity.toString();
 	};
-	this.addToRow = function(row, prepend, makePassable){
+	this.addToRow = function(row, prepend, makePassable, terr){
 		var cellTemplate = '<td id="c_'+this.x+'_'+this.y+'_'+ident+'" data-sID="'+this.id+'"></td>';
 		this.hasBuilding = false;
 		prepend ? row.prepend(cellTemplate) : row.append(cellTemplate)
 		this.onMap = getMapSq([this.x, this.y]);
 		this.onMap.append(SquareTemplate);
 		this.onMap.addClass('unlit');
-		this.setContents(makePassable);
+		this.setContents(makePassable, terr);
 		this.active = true;
 	};
 	this.whatsHere = function(){
