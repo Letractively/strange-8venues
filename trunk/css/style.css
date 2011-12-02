@@ -387,7 +387,7 @@ body {
 .m_grid td.lit .t.concrete:after, .concrete { content: "+"; background-color: #CCC; font-size:8px; }
 .m_grid td.lit .t.forest:after, .forest { content: "^"; background-color: #0B360B;}
 .m_grid td.lit .t.dirt:after, .dirt { content: "░"; background-color: #A37547; font-size:8px; }
-.m_grid td.lit .t.lake:after, .lake { content: "~"; background-color: #a0cdca; background-image: none;}
+.m_grid td.lit .t.lake:after, .lake { content: "~"; background-color: #a0cdca;}
 
 .m_grid td.lit .t.floor:after { content: "'"; background-color: #000; font-size:8px; }
 
