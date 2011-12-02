@@ -356,12 +356,13 @@ body {
 .m_grid td.lit .p { top: 15px; left: 12px; color: #000; }
 
 /* Player */
+.m_grid td.lit .p:after { background: URL('../images/sq_fade_sm.png'); }
 .m_grid td.lit .p.me:after { content: '@'; background-color: red; color: #FFF; }
-.m_grid td.lit .p.me2:after { content: '@'; background-color: blue; color: #FFF; }
 
 /* NPCs */
 
 /* Buildings */
+.m_grid td.lit .b:after { background: URL('../images/sq_fade_sm.png'); }
 .m_grid td.lit .b.portal:after { content: '[X]'; background-color: #FFF; color: #0F0; }
 .m_grid td.lit .b.house:after { content: '[H]'; background-color: #5d3f00; }
 .m_grid td.lit .b.shop:after { content: '[S]'; background-color: #a87e00; }
@@ -373,10 +374,11 @@ body {
 .m_grid td.lit .b.gateway:after { content: '[G]'; background-color: #FFF; color: #000; }
 
 /* Terrain */
+.m_grid td.lit .t:after { background: URL('../images/sq_fade.png'); }
 .m_grid td.lit .t.desert:after, .desert { content: "..."; background-color: #d9b46a; }
 .m_grid td.lit .t.plains:after, .plains { content: "\BA \ "; background-color: #B87700; }
 .m_grid td.lit .t.grass:after, .grass { content: "░"; background-color: #7e9b2e; }
-.m_grid td.lit .t.sea:after, .sea { content: ""; background-color: #3e7f8f; font-weight: bold; }
+.m_grid td.lit .t.sea:after, .sea { content: " "; background-color: #3e7f8f; font-weight: bold; background-image: none; }
 .m_grid td.lit .t.river:after, .river { content: "~"; background-color: #a0cdca; }
 .m_grid td.lit .t.mountain:after, .mountain { content: "▲"; background-color: #6e3519;}
 .m_grid td.lit .t.hill:after, .hill { content: "▲"; background-color: #97793f; font-size:8px; }
@@ -385,7 +387,7 @@ body {
 .m_grid td.lit .t.concrete:after, .concrete { content: "+"; background-color: #CCC; font-size:8px; }
 .m_grid td.lit .t.forest:after, .forest { content: "^"; background-color: #0B360B;}
 .m_grid td.lit .t.dirt:after, .dirt { content: "░"; background-color: #A37547; font-size:8px; }
-.m_grid td.lit .t.lake:after, .lake { content: "~"; background-color: #a0cdca; }
+.m_grid td.lit .t.lake:after, .lake { content: "~"; background-color: #a0cdca; background-image: none;}
 
 .m_grid td.lit .t.floor:after { content: "'"; background-color: #000; font-size:8px; }
 
