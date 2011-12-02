@@ -216,8 +216,7 @@ var Input = function(){
 			centerOn(me);
 		});
 		// Make everything unselectable
-		//$('body *').bind('selectstart', function(){return false;});
-		//$('textarea').bind('selectstart', function(){return true;});
+		$('.m_grid td.lit .quad').bind('selectstart', function(){return false;});
 	
 	/*
 		Init
