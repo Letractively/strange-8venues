@@ -15,7 +15,7 @@ var Square = function(loc, maxSquares){
 	this.vicinity = [];
 	this.passable;
 	
-	this.setContents = function(makePassable, terr){
+	this.setContents = function(makePassable){
 		// Terrain
 		var terrains = activeMap.terrain;
 		var rand = getRandom(terrains.length);
@@ -47,7 +47,6 @@ var Square = function(loc, maxSquares){
 						var s = getMapSq([xSq[vx],ySq[vy]]);
 						var sID = s.attr('data-sID');
 						var vType = Squares[sID].t.type;
-							vType = vType.replace('_', ' ');
 						this.vicinity.push(vType);
 					}
 					else{
@@ -56,16 +55,16 @@ var Square = function(loc, maxSquares){
 				}
 			}
 		}
-		return this.vicinity.toString();
+		//return this.vicinity;
 	};
-	this.addToRow = function(row, prepend, makePassable, terr){
+	this.addToRow = function(row, prepend, makePassable){
 		var cellTemplate = '<td id="c_'+this.x+'_'+this.y+'_'+ident+'" data-sID="'+this.id+'"></td>';
 		this.hasBuilding = false;
 		prepend ? row.prepend(cellTemplate) : row.append(cellTemplate)
 		this.onMap = getMapSq([this.x, this.y]);
 		this.onMap.append(SquareTemplate);
 		this.onMap.addClass('unlit');
-		this.setContents(makePassable, terr);
+		this.setContents(makePassable);
 		this.active = true;
 	};
 	this.whatsHere = function(){
@@ -78,7 +77,6 @@ var Square = function(loc, maxSquares){
 		var wt = this.t.type;
 			wt = wt.replace('_', ' ');
 		s += "<b>Terrain</b> " + wt + "<br/>";
-		//s += "<b>Vicinity</b> " + this.lookAround();
 		s += "</div>";
 		statuss.show(s);
 	};

@@ -114,7 +114,8 @@ var Input = function(){
 				},
 				buttons: M_D.buttons,
 				title: capIt(type),
-				modal: true
+				modal: true,
+                                zIndex: 5000
 			});
 		}
 	/*

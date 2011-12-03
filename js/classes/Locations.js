@@ -5,10 +5,12 @@ var Overland = function(){
     this.buildings = [{
 			t: Village_prop, maxi: 5, mini: 1
 		},{
-			t: Castle_prop, maxi: 3, mini: 1
+			t: City_prop, maxi: 3, mini: 1
 		},{
-			t: Temple_prop, maxi: 3, mini: 1
-	}];
+			t: SmallTown_prop, maxi: 5, mini: 1
+		},{
+			t: Castle_prop, maxi: 3, mini: 1
+		}];
     this.terrain = [Desert, Plains, Grass, Hill, Mountain, River, LowGrass, Sea];
     this.entry = "open";
     this.startRows = getRandom(10)+8; // 8-18 max
@@ -16,14 +18,54 @@ var Overland = function(){
 };
 var Overland_prop = { type: "overland", obj: Overland, group: Overlands, maxi: 1, mini: 1, generated: 0 };
 
+var Cities = [];
+var City = function(){
+    this.type = City_prop.type;
+    this.group = City_prop.group;
+    this.buildings = [{
+		    t: Shop_prop, maxi: 3, mini: 1
+		},{
+		    t: Restaurant_prop, maxi: 3, mini: 1
+		},{
+		    t: House_prop, maxi: 10, mini: 5
+	}];
+    this.terrain = [Lake, Grass, Forest, Dirt, Concrete]
+    this.entry = "open";
+    this.startRows = getRandom(8)+5;
+    this.startCols = getRandom(8)+5;
+};
+var City_prop = { type: "city", obj: City, group: Cities, maxi: 3, mini: 1, generated: 0 };
+
+var SmallTowns = [];
+var SmallTown = function(){
+    this.type = SmallTown_prop.type;
+    this.group = SmallTown_prop.group;
+    this.buildings = [{
+		    t: Shop_prop, maxi: 3, mini: 1
+	    },{
+		    t: House_prop, maxi: 5, mini: 3
+	    },{
+		    t: Restaurant_prop, maxi: 3, mini: 1
+	}];
+    this.terrain = [Lake, Grass, LowGrass, Forest, Dirt, Concrete]
+    this.entry = "open";
+    this.startRows = getRandom(4)+5;
+    this.startCols = getRandom(4)+5;
+};
+var SmallTown_prop = { type: "small_town", obj: SmallTown, group: SmallTowns, maxi: 5, mini: 1, generated: 0 };
+
 var Villages = [];
 var Village = function(){
     this.type = Village_prop.type;
     this.group = Village_prop.group;
     this.buildings = [{
-			t: Shop_prop, maxi: 3, mini: 1
-		},{
-			t: Restaurant_prop, maxi: 3, mini: 1
+		    t: Shop_prop, maxi: 3, mini: 1
+	    },{
+		    t: Restaurant_prop, maxi: 3, mini: 1
+	    },{
+		    t: House_prop, maxi: 5, mini: 3
+	    },{
+		    t: Temple_prop, maxi: 1, mini: 1
 	}];
     this.terrain = [Lake, Grass, LowGrass, Forest, Dirt, Concrete]
     this.entry = "open";
@@ -59,6 +101,18 @@ var Temple = function(){
     this.startCols = getRandom(3)+3;
 };
 var Temple_prop = { type: "temple", obj: Temple, group: Temples, maxi: 3, mini: 1, generated: 0 };
+
+var Houses = [];
+var House = function(){
+    this.type = House_prop.type;
+    this.group = House_prop.group;
+    this.buildings = [];
+    this.terrain = [Floor];
+    this.entry = "open";
+    this.startRows = getRandom(3)+3;
+    this.startCols = getRandom(3)+3;
+};
+var House_prop = { type: "house", obj: House, group: Houses, maxi: 20, mini: 1, generated: 0  };
 
 var Shops = [];
 var Shop = function(){

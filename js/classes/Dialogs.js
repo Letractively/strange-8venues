@@ -25,20 +25,34 @@ var D_Notes = {
 }
 
 var D_Options = {
-	open: function(){},
+	open: function(){
+		$('#optHideFeatureNames').attr('checked', hideFeatureNames);
+	},
 	content: "\
-		<input id='optShowPlaceNames' type='checkbox' disabled/><label for='optShowPlaceName' disabled>Show Place Names</label><br/>\
-		<input id='optShowFeatureNames' type='checkbox' disabled/><label for='optShowPlaceName' disabled>Show Feature Names</label>\
+		<input id='optHidePlaceNames' type='checkbox' disabled/><label for='optHidePlaceNames' disabled>Hide Place Names</label><br/>\
+		<input id='optHideFeatureNames' type='checkbox'/><label for='optHideFeatureNames'>Hide Feature Names</label>\
 	",
 	buttons: {
-		"Save": function() {
+		/*"Save": function() {
 			$(this).dialog('close');
-		},
+		},*/
 		"Close": function() {
 			$(this).dialog('close');
 		}
 	}
 }
+// Option settings
+var hideFeatureNames = false;
+$('#optHideFeatureNames').live('change',function(){
+	if($(this).attr('checked')=='checked'){
+		hideFeatureNames = 'checked';
+		$('.t_label').hide(0);
+	}
+	else{
+		hideFeatureNames = false;
+		$('.t_label').show(0);
+	}
+});
 
 var D_Help = {
 	open: function(){},
