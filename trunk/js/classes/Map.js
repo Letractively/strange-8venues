@@ -77,14 +77,34 @@ var Map = function(){
 						}
 					}
 					// Is this a border square?
-					var t = false;
+					/*var border = false;
 					if(j==0 || i==0 || j==m.startCols-1 || i==m.startRows-1){
-						//t = terr;
-					}
+						border = true;
+					}*/
 					var n = new Square([j, i]);
-					n.addToRow(row, false, p, t);
+					n.addToRow(row, false, p);
 				}
 			}
+			
+			// Seek and label terrain features
+			for(i=0; i<Squares.length; i++){
+				Squares[i].lookAround();
+				var vic = Squares[i].vicinity;
+				var type = Squares[i].t.type;
+				var tc = 0;
+				for(j=0; j<vic.length; j++){
+					if (vic[j] == type){
+						tc++;
+					}
+				}
+				if(tc >=4){
+					var label = "<div class='t_label' id='t_label_"+Squares[i].id+"'>"+type+"</div>";
+					Squares[i].onMap.append(label);
+					var labelID = $('#t_label_'+Squares[i].id);
+					labelID.css('z-index', i+3000);
+				}
+			}
+			
 			// Generate Buildings
 			var buildings = activeMap.buildings;
 				// Create array for occupied squares
@@ -118,7 +138,7 @@ var Map = function(){
 							var bldg_location = getSquare(maybe_here);
 							var bldg_square = getSquareId(maybe_here);
 						}
-						while(bldg_location.passable == false || $.inArray(bldg_square, occupado) >= 0)
+						while(bldg_location.buildings == false || bldg_location.passable == false || $.inArray(bldg_square, occupado) >= 0)
 						occupado.push(bldg_square);
 						bldg_location.b = buildings[bi].t;
 						bldg_location.b.generated++; // add to total generated

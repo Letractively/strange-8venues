@@ -249,7 +249,7 @@ body {
 	background: #FFF;
 	font-size: 11px;
 	font-family: arial;
-	z-index: 10000;
+	z-index: 4000;
 }
 #status .whatshere {
 	font-size: 11px;
@@ -283,6 +283,7 @@ body {
 	font-size: 11px !important;
 	position: relative;
 	top: -2px;
+	left: 3px;
 }
 
 /* Map container */
@@ -296,6 +297,15 @@ body {
     position: relative;
     height: auto;
     width: auto;
+}
+
+/* Map labels */
+.t_label {
+    position: absolute;
+    background: #fff;
+    padding:3px;
+    color: #666;
+    font-size: 10px;
 }
 
 /* Generic Map grid */
@@ -363,12 +373,14 @@ body {
 
 /* Buildings */
 .m_grid td.lit .b:after { background: URL('../images/sq_fade_sm.png'); }
+.m_grid td.lit .b.city:after { content: '[M]'; background-color: #333; }
+.m_grid td.lit .b.small_town:after { content: '[t]'; background-color: #666; }
 .m_grid td.lit .b.portal:after { content: '[X]'; background-color: #FFF; color: #0F0; }
-.m_grid td.lit .b.house:after { content: '[H]'; background-color: #5d3f00; }
+.m_grid td.lit .b.house:after { content: '[h]'; background-color: #5d3f00; }
 .m_grid td.lit .b.shop:after { content: '[S]'; background-color: #a87e00; }
 .m_grid td.lit .b.restaurant:after { content: '[R]'; background-color: #9500c6; }
 .m_grid td.lit .b.castle:after { content: '[C]'; background-color: #004fbb; }
-.m_grid td.lit .b.village:after { content: '[V]'; background-color: #bb6e00; }
+.m_grid td.lit .b.village:after { content: '[v]'; background-color: #bb6e00; }
 .m_grid td.lit .b.temple:after { content: '[T]'; background-color: #00dcb5; }
 .m_grid td.lit .b.sanctuary:after { content: '[s]'; background-color: #000; }
 .m_grid td.lit .b.gateway:after { content: '[G]'; background-color: #FFF; color: #000; }
