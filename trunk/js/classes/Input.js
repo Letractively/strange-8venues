@@ -58,7 +58,8 @@ var Input = function(){
 						}
 					},
 					title: capIt(me.location),
-					modal: true
+					modal: true,
+                                        zIndex: 5000
 				});
 			}
 		};
