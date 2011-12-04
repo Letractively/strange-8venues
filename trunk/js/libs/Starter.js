@@ -44,3 +44,6 @@ var mapContainer = $('#map_container');
 // Create dialog
 main.append('<div id="dialog"></div>');
 var oDialog = $('#dialog');
+
+// Create map label
+var mapLabel = "<div class='t_label'></div>";

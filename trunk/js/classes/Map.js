@@ -88,9 +88,10 @@ var Map = function(){
 			
 			// Seek and label terrain features
 			for(i=0; i<Squares.length; i++){
-				Squares[i].lookAround();
-				var vic = Squares[i].vicinity;
-				var type = Squares[i].t.type;
+				var sq = Squares[i];
+				sq.lookAround();
+				var vic = sq.vicinity;
+				var type = sq.t.type;
 				var tc = 0;
 				for(j=0; j<vic.length; j++){
 					if (vic[j] == type){
@@ -98,10 +99,16 @@ var Map = function(){
 					}
 				}
 				if(tc >=4){
-					var label = "<div class='t_label' id='t_label_"+Squares[i].id+"'>"+type+"</div>";
-					Squares[i].onMap.append(label);
-					var labelID = $('#t_label_'+Squares[i].id);
-					labelID.css('z-index', i+3000);
+					sq.onMap.append(mapLabel);
+					sq.onMap.find('.t_label').prop('id', 't_label_'+sq.id);
+					var labelID = $('#t_label_'+sq.id);
+					labelID.text(capIt(sq.t.type));
+					labelID.fadeTo(0, '.6');
+					labelID.css({
+						'z-index': i+3000,
+						'margin-top': -sq.onMap.height() + ((sq.onMap.height()-labelID.height())/2)-3,
+						'margin-left': ((sq.onMap.width()-labelID.width())/2)-3
+					});
 				}
 			}
 			
