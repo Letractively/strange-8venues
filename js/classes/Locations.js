@@ -34,7 +34,7 @@ var City = function(){
     this.startRows = getRandom(8)+5;
     this.startCols = getRandom(8)+5;
 };
-var City_prop = { type: "city", obj: City, group: Cities, maxi: 3, mini: 1, generated: 0 };
+var City_prop = { type: "metropolis", obj: City, group: Cities, maxi: 3, mini: 1, generated: 0 };
 
 var SmallTowns = [];
 var SmallTown = function(){

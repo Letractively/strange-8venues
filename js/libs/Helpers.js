@@ -84,5 +84,6 @@ var setIdent = function(i){
 
 // Capitalize first letter
 var capIt = function(s){
+	s = s.replace('_', ' ');
 	return s.charAt(0).toUpperCase() + s.slice(1);
 };
