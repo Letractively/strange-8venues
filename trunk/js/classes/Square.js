@@ -6,15 +6,19 @@ var rebindSquares = function(){
 };
 var Squares = [];
 var Square = function(loc, maxSquares){
+	// Position and contents
 	this.loc = loc;
 	this.active = false;
 	this.x = this.loc[0];
 	this.y = this.loc[1];
 	this.id = Squares.length;
 	this.b;	this.t; this.i; this.p;
-	this.vicinity = [];
-	this.passable;
 	
+	// In-map
+	this.passable;
+	this.isFeature;
+	
+	// Methods
 	this.setContents = function(makePassable){
 		// Terrain
 		var terrains = activeMap.terrain;
@@ -29,33 +33,26 @@ var Square = function(loc, maxSquares){
 		this.passable = this.t.passable;
 		this.onMap.find('.t').addClass(this.t.type);
 	};
-	this.lookAround = function(){
-		var vicinitySet = true;
-		for(vl=0; vl<9; vl++){
-			if(this.vicinity[vl] == undefined){ vicinitySet = false; }
-		}
-		if(vicinitySet == false){
-			this.vicinity = [];
-			var xx = new Number(this.x);
-			var yy = new Number(this.y);
-			var xSq = [xx-1, xx, xx+1];
-			var ySq = [yy-1, yy, yy+1];
-
-			for (vy=0; vy<ySq.length; vy++){
-				for (vx=0; vx<xSq.length; vx++){
-					if(getMapSq([xSq[vx],ySq[vy]]).length > 0){
-						var s = getMapSq([xSq[vx],ySq[vy]]);
-						var sID = s.attr('data-sID');
-						var vType = Squares[sID].t.type;
-						this.vicinity.push(vType);
-					}
-					else{
-						this.vicinity.push('');
-					}
+	this.lookAround = function(r){
+		var adjacent=[];
+		var startX = this.x-r;
+		var startY = this.y-r;
+		var endX = this.x+r;
+		var endY = this.y+r;
+		
+		for(ax=startX; ax<=endX; ax++){
+			for(ay=startY; ay<=endY; ay++){
+				if(getMapSq([ax, ay]).length > 0){
+					var s = getMapSq([ax, ay]);
+					var sID = s.attr('data-sID');
+					adjacent.push(Squares[sID]);
+				}
+				else{
+					adjacent.push('');
 				}
 			}
 		}
-		//return this.vicinity;
+		return adjacent;
 	};
 	this.addToRow = function(row, prepend, makePassable){
 		var cellTemplate = '<td id="c_'+this.x+'_'+this.y+'_'+ident+'" data-sID="'+this.id+'"></td>';

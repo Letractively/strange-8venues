@@ -89,26 +89,83 @@ var Map = function(){
 			// Seek and label terrain features
 			for(i=0; i<Squares.length; i++){
 				var sq = Squares[i];
-				sq.lookAround();
-				var vic = sq.vicinity;
-				var type = sq.t.type;
-				var tc = 0;
-				for(j=0; j<vic.length; j++){
-					if (vic[j] == type){
-						tc++;
+				
+				if(sq.isFeature != true){
+					// Second Pass, Range = 2
+					var adj = sq.lookAround(2);
+					var ftype;
+					var greatest=0;
+					var makeFeature=[];
+
+					for(pz=0; pz<adj.length; pz++){
+						if(adj[pz].isFeature != true){
+							var mycount = 0;
+							var temp=[];
+							for(qz=0; qz<adj.length; qz++){
+								if(adj[pz].t != undefined && adj[qz].t != undefined && adj[pz].t.type == adj[qz].t.type && adj[pz].t.label != undefined){
+									mycount++;
+									temp.push(adj[pz]);
+								}
+							}
+							if(mycount > greatest){
+								greatest = mycount;
+								ftype =adj[pz].t.label;
+								makeFeature = temp;
+							}
+						}
+					}
+					
+					if(greatest >= 8){
+						for(n=0; n<makeFeature.length; n++){
+							makeFeature[n].isFeature = true;
+						}
+						sq.onMap.append(mapLabel);
+						sq.onMap.find('.t_label').prop('id', 't_label_'+sq.id);
+						var labelID = $('#t_label_'+sq.id);
+						var ta = TerrainAdj[getRandom(TerrainAdj.length)];
+						labelID.html("The " + ta + "<br/>" + ftype);
+						labelID.fadeTo(0, '.6');
+						labelID.css({
+							'z-index': i+3000,
+							'margin-top': -sq.onMap.height() + ((sq.onMap.height()-labelID.height())/2)-3,
+							'margin-left': ((sq.onMap.width()-labelID.width())/2)-3
+						});
 					}
 				}
-				if(tc >=4){
-					sq.onMap.append(mapLabel);
-					sq.onMap.find('.t_label').prop('id', 't_label_'+sq.id);
-					var labelID = $('#t_label_'+sq.id);
-					labelID.text(capIt(sq.t.type));
-					labelID.fadeTo(0, '.6');
-					labelID.css({
-						'z-index': i+3000,
-						'margin-top': -sq.onMap.height() + ((sq.onMap.height()-labelID.height())/2)-3,
-						'margin-left': ((sq.onMap.width()-labelID.width())/2)-3
-					});
+			}
+			
+			for(i=0; i<Squares.length; i++){
+				var sq = Squares[i];
+				if(sq.isFeature != true && sq.t.label != undefined){	
+					// First Pass, Range = 1
+					var adj = sq.lookAround(1);
+					var type = sq.t.type;
+					var tc = 0;
+					var temp = [];
+					for(j=0; j<adj.length; j++){
+						if(adj[j] != ""){
+							if (adj[j].t.type == type){
+								temp.push(adj[j]);
+								tc++;
+							}
+						}
+					}
+					if(tc >= 4){
+						for(k=0; k<temp.length; k++){
+							temp[k].isFeature = true;
+						}
+						sq.onMap.append(mapLabel);
+						sq.onMap.find('.t_label').prop('id', 't_label_'+sq.id);
+						var labelID = $('#t_label_'+sq.id);
+						var ta = TerrainAdj[getRandom(TerrainAdj.length)];
+						labelID.html("The " + ta + "<br/>" + sq.t.label);
+						labelID.fadeTo(0, '.6');
+						labelID.css({
+							'z-index': i+3000,
+							'margin-top': -sq.onMap.height() + ((sq.onMap.height()-labelID.height())/2)-3,
+							'margin-left': ((sq.onMap.width()-labelID.width())/2)-3
+						});
+					}
 				}
 			}
 			
@@ -139,7 +196,7 @@ var Map = function(){
 						bldg_count = 1;
 					}
 
-					for(var bc=0; bc<bldg_count; bc++){
+					for(bc=0; bc<bldg_count; bc++){
 						do{
 							var maybe_here = [getRandom(m.startCols), getRandom(m.startRows)];
 							var bldg_location = getSquare(maybe_here);

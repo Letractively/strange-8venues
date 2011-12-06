@@ -1,4 +1,18 @@
 //
+// Helper prototype extensions
+//
+Array.prototype.containsHowMany = function (s) {
+	var k=0;
+	for (i in this) {
+		if (this[i] === s) {
+			k++;
+		}
+	}
+	if(k>0) { return k; }
+	else { return false; }
+}
+
+//
 // Helper Vars
 //
 
