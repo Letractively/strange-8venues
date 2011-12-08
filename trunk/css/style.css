@@ -321,7 +321,7 @@ body {
 	background-color: #f00;
 	border: 1px solid #CCC;
 	display: inline-block;
-	float: right;
+	float: left;
 	height: 5px;
 	width: 5px;
 }
