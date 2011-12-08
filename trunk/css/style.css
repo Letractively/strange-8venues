@@ -303,10 +303,30 @@ body {
 .t_label {
     position: absolute;
     background: #fff;
+	border: 1px solid #999;
     padding:3px;
     color: #666;
     font-size: 10px;
 	text-align: center;
+}
+.t_label .l_text {
+	display: inline-block;
+	margin-right: 3px;
+}
+.t_label .l_text.off {
+	display: none;
+}
+.t_label .l_minmax {
+	text-decoration: none;
+	background-color: #f00;
+	border: 1px solid #CCC;
+	display: inline-block;
+	float: right;
+	height: 5px;
+	width: 5px;
+}
+.t_label .l_minmax.off {
+	background-color: #0f0;
 }
 
 /* Generic Map grid */

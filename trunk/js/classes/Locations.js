@@ -11,7 +11,7 @@ var Overland = function(){
 		},{
 			t: Castle_prop, maxi: 3, mini: 1
 		}];
-    this.terrain = [Desert, Plains, Grass, Hill, Mountain, River, LowGrass, Sea];
+    this.terrain = [Desert, Plains, Grass, Hill, Mountain, River, LowGrass, Sea, Forest];
     this.entry = "open";
     this.startRows = getRandom(10)+8; // 8-18 max
     this.startCols = getRandom(14)+10; // 14-24 max

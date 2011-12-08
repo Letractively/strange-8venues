@@ -1,16 +1,6 @@
 //
 // Helper prototype extensions
 //
-Array.prototype.containsHowMany = function (s) {
-	var k=0;
-	for (i in this) {
-		if (this[i] === s) {
-			k++;
-		}
-	}
-	if(k>0) { return k; }
-	else { return false; }
-}
 
 //
 // Helper Vars
@@ -101,3 +91,26 @@ var capIt = function(s){
 	s = s.replace('_', ' ');
 	return s.charAt(0).toUpperCase() + s.slice(1);
 };
+
+// Add a label to the map at a particular square
+var addMapLabel = function(s, l){
+	var sID = s.id;
+	s.onMap.append(mapLabel);
+	s.onMap.find('.t_label').prop('id', 't_label_'+sID);
+	var labelID = $('#t_label_'+sID);
+	var l_content = '<div class="l_text">' + l + "</div><a href='javascript:void(0);' class='l_minmax'>&nbsp;</a>";
+	labelID.html(l_content);
+	labelID.fadeTo(0, '.6');
+	labelID.css({
+		'z-index': i+3000,
+		'margin-top': -s.onMap.height() + ((s.onMap.height()-labelID.height())/2)-3,
+		'margin-left': ((s.onMap.width()-labelID.width())/2)-3
+	});
+	var labelText = $('#t_label_'+sID).find('.l_text');
+	var labelMinMax = $('#t_label_'+sID).find('.l_minmax');
+	// Need to rebind when moving between maps
+	labelMinMax.toggle(
+		function(){labelText.addClass('off'); $(this).addClass('off');},
+		function(){labelText.removeClass('off'); $(this).removeClass('off');}
+	);
+}

@@ -16,7 +16,7 @@ var Square = function(loc, maxSquares){
 	
 	// In-map
 	this.passable;
-	this.isFeature;
+	this.isFeature = false;
 	
 	// Methods
 	this.setContents = function(makePassable){
@@ -33,6 +33,7 @@ var Square = function(loc, maxSquares){
 		this.passable = this.t.passable;
 		this.onMap.find('.t').addClass(this.t.type);
 	};
+	
 	this.lookAround = function(r){
 		var adjacent=[];
 		var startX = this.x-r;
