@@ -26,7 +26,7 @@ var Map = function(){
 	this.init = function(m, id, terr){
 		activeMap = m;
 		m.id = id;
-		m.grid = [];
+		m.squares = [];
 		var dir = me.lastDir;
 		if(dir == undefined){
 			var startX = getRandom(m.startCols-1);
@@ -82,6 +82,7 @@ var Map = function(){
 						border = true;
 					}*/
 					var n = new Square([j, i]);
+					m.squares.push(n);
 					n.addToRow(row, false, p);
 				}
 			}

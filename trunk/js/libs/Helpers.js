@@ -92,9 +92,32 @@ var capIt = function(s){
 	return s.charAt(0).toUpperCase() + s.slice(1);
 };
 
+// Reattach square references when loading a map
+var rebindSquares = function(){
+	var sq = activeMap.squares;
+	for(i=0; i<sq.length; i++){
+		sq[i].onMap = getMapSq([sq[i].x,sq[i].y]);
+		bindMapLabel(sq[i]);
+	}
+};
+
+var bindMapLabel = function(s){
+	s.onMap.find('.t_label .l_minmax').click(function(){
+		var labelText = $(this).parent().find('.l_text');
+		if($(this).hasClass('off')){
+			labelText.removeClass('off');
+			$(this).removeClass('off');
+		} else {
+			labelText.addClass('off');
+			$(this).addClass('off');
+		}
+	});
+}
+
 // Add a label to the map at a particular square
-var addMapLabel = function(s, l){
+var addMapLabel = function(s){
 	var sID = s.id;
+	var l = s.label;
 	s.onMap.append(mapLabel);
 	s.onMap.find('.t_label').prop('id', 't_label_'+sID);
 	var labelID = $('#t_label_'+sID);
@@ -106,11 +129,5 @@ var addMapLabel = function(s, l){
 		'margin-top': -s.onMap.height() + ((s.onMap.height()-labelID.height())/2)-3,
 		'margin-left': ((s.onMap.width()-labelID.width())/2)-3
 	});
-	var labelText = $('#t_label_'+sID).find('.l_text');
-	var labelMinMax = $('#t_label_'+sID).find('.l_minmax');
-	// Need to rebind when moving between maps
-	labelMinMax.toggle(
-		function(){labelText.addClass('off'); $(this).addClass('off');},
-		function(){labelText.removeClass('off'); $(this).removeClass('off');}
-	);
+	bindMapLabel(s);
 }

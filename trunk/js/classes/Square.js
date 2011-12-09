@@ -1,9 +1,3 @@
-// Reattach square references when loading a map
-var rebindSquares = function(){
-	for(i=0; i<Squares.length; i++){
-		Squares[i].onMap = getMapSq([Squares[i].x,Squares[i].y]);
-	}
-};
 var Squares = [];
 var Square = function(loc, maxSquares){
 	// Position and contents
