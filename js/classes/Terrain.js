@@ -16,8 +16,8 @@ var TerrainLabels = [];
 var TerrainAdj = ['Great', 'Horrid', 'Lonely', 'Dark', 'Spiteful', 'Pitiful', 'Screaming', 'Haunted', 'Broken', 'Hateful', 'Hellish', 'Bright', 'Cursed', 'Cold', 'Freezing', 'Blazing', 'Creeping', 'Shimmering'];
 
 var generateTerrainLabels = function(range, limit){
-	for(i=0; i<Squares.length; i++){
-		var sq = Squares[i];
+	for(i=0; i<activeMap.squares.length; i++){
+		var sq = activeMap.squares[i];
 
 		// Find the most prominent feature in range
 		var adj = sq.lookAround(range);
@@ -63,8 +63,8 @@ var generateTerrainLabels = function(range, limit){
 			}
 			while($.inArray(the_label, TerrainLabels) > 0) // make sure name is unique
 			TerrainLabels.push(the_label);
-			
-			addMapLabel(sq, the_label);
+			sq.label = the_label;
+			addMapLabel(sq);
 		}
 	}
 }
