@@ -1,5 +1,5 @@
 var Squares = [];
-var Square = function(loc, maxSquares){
+var Square = function(loc){
 	// Position and contents
 	this.loc = loc;
 	this.active = false;
@@ -64,7 +64,7 @@ var Square = function(loc, maxSquares){
 		if(this.b != undefined){
 			var wb = this.b.type;
 				wb = wb.replace('_', ' ');
-			s += "<b>Building</b> " + wb + "<br/>";
+			s += "<b>Location</b> " + wb + "<br/>";
 		}
 		var wt = this.t.type;
 			wt = wt.replace('_', ' ');

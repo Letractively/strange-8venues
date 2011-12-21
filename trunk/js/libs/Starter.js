@@ -1,6 +1,9 @@
 // Assign document
 var doc = $(document);
 
+// Template for all map squares
+var SquareTemplate = '<div class="sq"><div class="quad b">&nbsp;</div><div class="quad t">&nbsp;</div><div class="quad i">&nbsp;</div><div class="quad p">&nbsp;</div></div>';
+
 // Assign main
 var main = $('#main');
 main.append('\

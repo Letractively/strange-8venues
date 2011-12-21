@@ -17,7 +17,6 @@ var LoadMap = function(s){
 	}
 	if(exists == false) {
 		var m = new MapType();
-		//alert(terr.type);
 		Map.init(m, id, terr);
 	}
 };
@@ -76,11 +75,6 @@ var Map = function(){
 							if (tc.toString()==startSquares[k].toString()) { p = true; }
 						}
 					}
-					// Is this a border square?
-					/*var border = false;
-					if(j==0 || i==0 || j==m.startCols-1 || i==m.startRows-1){
-						border = true;
-					}*/
 					var n = new Square([j, i]);
 					m.squares.push(n);
 					n.addToRow(row, false, p);
@@ -88,48 +82,48 @@ var Map = function(){
 			}
 			
 			// Seek and label terrain features
-			// Need to create a record of squares for each map....
 			generateTerrainLabels(2,7);
 			generateTerrainLabels(1,4);
 			
-			// Generate Buildings
-			var buildings = activeMap.buildings;
+			// Generate Locations
+			var locations = activeMap.locations;
 				// Create array for occupied squares
 				var occupado = [];
-			for(var bi=0; bi<buildings.length; bi++){
-				var total_bldgs_remaining = buildings[bi].t.maxi - buildings[bi].t.generated;
-				if(total_bldgs_remaining > 0){
-					var bldg_max;
+			for(var bi=0; bi<locations.length; bi++){
+				var loc_type = locations[bi].type;
+				var total_locs_remaining = loc_type.maxi - loc_type.generated;
+				if(total_locs_remaining > 0){
+					var loc_max;
 					// If the bldg maximum is greater than what's left, set max to what's left
-					if(buildings[bi].maxi >= total_bldgs_remaining) {
-						bldg_max = total_bldgs_remaining;
-					} else { bldg_max = buildings[bi].maxi; }
+					if(locations[bi].maxi >= total_locs_remaining) {
+						loc_max = total_locs_remaining;
+					} else { loc_max = locations[bi].maxi; }
 					
 					// Get a random count based on max available
-					var bldg_count = getRandom(bldg_max+1);
+					var loc_count = getRandom(loc_max+1);
 					
 					// If the count is less than the minimum reqd, set it for the minimum
 					// This may overstep the stated maximum, but will only do so once per building type
-					if(bldg_count < buildings[bi].mini) {
-						bldg_count = buildings[bi].mini;
+					if(loc_count < locations[bi].mini) {
+						loc_count = locations[bi].mini;
 					}
 					
 					// If there's only one of a location overall, make sure it gets generated
-					if(buildings[bi].t.maxi == 1) {
-						bldg_count = 1;
+					if(loc_type.maxi == 1) {
+						loc_count = 1;
 					}
 
-					for(bc=0; bc<bldg_count; bc++){
+					for(bc=0; bc<loc_count; bc++){
 						do{
 							var maybe_here = [getRandom(m.startCols), getRandom(m.startRows)];
-							var bldg_location = getSquare(maybe_here);
-							var bldg_square = getSquareId(maybe_here);
+							var loc_location = getSquare(maybe_here);
+							var loc_square = getSquareId(maybe_here);
 						}
-						while(bldg_location.buildings == false || bldg_location.passable == false || $.inArray(bldg_square, occupado) >= 0)
-						occupado.push(bldg_square);
-						bldg_location.b = buildings[bi].t;
-						bldg_location.b.generated++; // add to total generated
-						bldg_location.onMap.find('.b').addClass(bldg_location.b.type);
+						while(loc_location.buildings == false || loc_location.passable == false || $.inArray(loc_square, occupado) >= 0)
+						occupado.push(loc_square);
+						loc_location.b = loc_type;
+						loc_location.b.generated++; // add to total generated
+						loc_location.onMap.find('.b').addClass(loc_location.b.type);
 					}
 				}
 			}
@@ -148,13 +142,15 @@ var Map = function(){
 		m.mg.draggable({
 			cursor: 'move'
 		});
+		
+		return m;
 	};
 	// m-> map
 	this.saveMe = function(m){
 		m.mg.draggable( "option", "disabled", true );
 		m.lastPrev = me.previousSquare;
 		m.mapCoords = me.coords;
-		m.lastID = getSquare(me.coords).id + '_' + m.group.length;
+		m.lastID = getSquare(me.coords).id;// + '_' + m.group.length;
 		m.mapHTML = m.mg.html();
 		m.mg.remove();
 	};
@@ -204,7 +200,6 @@ var Map = function(){
 		
 		me.currentSquare = getSquare(me.coords).id;
 		me.locIt(me.currentSquare, m.lastPrev);
-		
 		me.updateStatus(me.coords);
 		
 		// Center the map

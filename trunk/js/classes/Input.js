@@ -49,8 +49,13 @@ var Input = function(){
 					buttons: { 
 						"Y": function() {
 							Map.saveMe(activeMap);
-							var justPreviousMap = previousMaps.pop();
-							Map.loadMe(justPreviousMap, 'exit');
+							if(previousMaps.length > 0) {
+								var justPreviousMap = previousMaps.pop();
+								Map.loadMe(justPreviousMap, 'exit');
+							}
+							else {
+								Map.createContainer(activeMap);
+							}
 							$(this).dialog('close');
 						},
 						"N": function() {
@@ -59,13 +64,13 @@ var Input = function(){
 					},
 					title: capIt(me.location),
 					modal: true,
-                                        zIndex: 5000
+                    zIndex: 5000
 				});
 			}
 		};
 		
 		// Enter location
-		var enterLoc = function(){
+		this.enterLoc = function(){
 			var sq = Squares[me.currentSquare];
 			if(sq.b != undefined){
 				previousMaps.push(activeMap);
@@ -78,11 +83,12 @@ var Input = function(){
 		this.doKeyUp = function(k) {
 			// Capture key
 			k.preventDefault();
+			k.stopPropagation();
 			switch (k.which) {
 				// return
 				case 13: wait(); break;
 				// spacebar (enter bldg)
-				case 32: enterLoc(); break;
+				case 32: input.enterLoc(); break;
 				// left
 				case 37: moveLeft(); break;
 				// up
@@ -158,7 +164,7 @@ var Input = function(){
 		// Touch events
 		btnInventory.bind('click touchend', function(e){e.preventDefault(); M_Dialog('inventory');});
 		btnNotes.bind('click touchend', function(e){e.preventDefault(); M_Dialog('notes');});
-		btnEnter.bind('click touchend', function(e){e.preventDefault(); enterLoc();});
+		btnEnter.bind('click touchend', function(e){e.preventDefault(); input.enterLoc();});
 		btnOpts.bind('click touchend', function(e){e.preventDefault(); M_Dialog('options');});
 		btnHelp.bind('click touchend', function(e){e.preventDefault(); M_Dialog('help');});
 	
