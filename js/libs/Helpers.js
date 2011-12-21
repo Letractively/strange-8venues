@@ -1,14 +1,3 @@
-//
-// Helper prototype extensions
-//
-
-//
-// Helper Vars
-//
-
-// Template for all map squares
-var SquareTemplate = '<div class="sq"><div class="quad b">&nbsp;</div><div class="quad t">&nbsp;</div><div class="quad i">&nbsp;</div><div class="quad p">&nbsp;</div></div>';
-
 // 
 // Helper Functions
 //
@@ -112,7 +101,7 @@ var bindMapLabel = function(s){
 			$(this).addClass('off');
 		}
 	});
-}
+};
 
 // Add a label to the map at a particular square
 var addMapLabel = function(s){
@@ -130,4 +119,26 @@ var addMapLabel = function(s){
 		'margin-left': ((s.onMap.width()-labelID.width())/2)-3
 	});
 	bindMapLabel(s);
+};
+
+// Dialog Alerts
+var D_Alert = function(){
+	this.openMe = function(t,s){
+		input.unbindFromMap();
+		oDialog.html(s);
+		oDialog.dialog({
+			close: function(){
+				input.bindToMap();
+			},
+			title: t,
+			modal: true,
+			zIndex: 5000
+		});
+	};
+	this.updateMe = function(s){
+		oDialog.html(s);
+	};
+	this.closeMe = function(){
+		oDialog.dialog('close');
+	};
 }

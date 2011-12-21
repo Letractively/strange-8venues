@@ -25,6 +25,7 @@ var Player = function(name){
 		var current = Squares[curr].onMap;
 		var previous;
 		var loc = [Squares[curr].x, Squares[curr].y];
+		me.coords = loc;
 		// Remove player from previous square
 		if(prev != undefined){
 			previous = Squares[prev].onMap;
