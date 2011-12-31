@@ -5,7 +5,11 @@ var Player = function(name){
 	this.inventory = [];
 	this.money;
 	this.getLocation = function(){
-		return this.location;
+		if(this.location.name != undefined){
+			return this.location.name;
+		} else {
+			return this.location.type;
+		}
 	};
 	this.lightUpLoc = function(loc){
 		var x = new Number(loc[0]);
@@ -45,7 +49,7 @@ var Player = function(name){
 		// Update actual location
 		var square = getSquare(c);
 		// Show what's on this square
-		square.whatsHere();
+		//square.whatsHere();
 	};
 	this.move = function(dir){
 		var isPassable = true;
@@ -87,15 +91,21 @@ var Player = function(name){
 			default: break;
 		}
 		this.currentSquare = getSquare(this.coords).id;
+		/*
+			Successful Move
+			Check all time, events, actions, etc. here
+		*/
 		if(isPassable == true){
 			this.lastDir = dir;
 			this.locIt(this.currentSquare, this.previousSquare);
 			this.updateStatus(this.coords);
 			// Set map position
 			centerOn(me);
+			// Update Time in Story
+			Story.updateTime();
 		}
 		else if(!square){
-			// if the square is non-existent (not just impassable) - ONCE BEACHES ADDED CREATE CHECK IF USER ON BEACH FOR OVERLAND MAP
+			// if the square is non-existent (not just impassable)
 			input.leaveLoc();
 		}
 	};

@@ -1,6 +1,9 @@
 // Assign document
 var doc = $(document);
 
+// Loading image
+var LoadingAnim = '<img src="images/ajax-loader.gif" id="loading_anim" />';
+
 // Template for all map squares
 var SquareTemplate = '<div class="sq"><div class="quad b">&nbsp;</div><div class="quad t">&nbsp;</div><div class="quad i">&nbsp;</div><div class="quad p">&nbsp;</div></div>';
 
@@ -20,6 +23,19 @@ main.append('\
 // Create status
 main.append('<div id="status"></div>');
 var oStatus = $('#status');
+
+main.append('\
+	<div id="clock">\
+		<div class="ddmm"><div class="dd"></div><div class="mm"></div></div>\
+		<div class="hm"><span class="h"></span>:<span class="m"></span></div>\
+		<div class="ampm"></div>\
+		<div class="clearing"></div>\
+		<div class="y"></div>\
+	</div>');
+var oClock = $('#clock');
+
+main.append('<div id="whereami"></div>');
+var oWhereami = $('#whereami');
 
 // Create left column
 var LeftColumn = $('#bottom_cell');

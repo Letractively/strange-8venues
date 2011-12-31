@@ -1,4 +1,39 @@
+var D_Standard = {}
+
+var D_Loading = function(){
+	this.openMe = function(t,s){
+		input.unbindFromMap();
+		oDialog.html(s);
+		oDialog.dialog({
+			close: function(){
+				input.bindToMap();
+			},
+			title: t,
+			modal: true,
+			zIndex: 5000
+		});
+	};
+	this.updateMe = function(s){
+		oDialog.html(s);
+	};
+	this.closeMe = function(){
+		oDialog.dialog('close');
+	};
+}
+
+var D_Welcome = {
+	title: 'Strange Avenues',
+	buttons: {
+		"Get on with it!": function() {
+			$(this).dialog('close');
+			var story = $('#pick_a_case option:selected').val();
+			Story.load(story);
+		}
+	}
+}
+
 var D_Inventory = {
+	title: 'Inventory',
 	open: function(){},
 	content: "Inventory goes here",
 	buttons: {
@@ -10,6 +45,7 @@ var D_Inventory = {
 
 var Data_Notes;
 var D_Notes = {
+	title: 'Case Notes',
 	open: function(){
 		$('#notes').val(Data_Notes);
 	},
@@ -17,14 +53,16 @@ var D_Notes = {
 	buttons: {
 		"Save": function() {
 			Data_Notes = $('#notes').val();
-		},
+			$(this).dialog('close');
+		}/*,
 		"Close": function() {
 			$(this).dialog('close');
-		}
+		}*/
 	}
 }
 
 var D_Options = {
+	title: 'Game Options',
 	open: function(){
 		$('#optHideFeatureNames').attr('checked', hideFeatureNames);
 	},
@@ -54,9 +92,21 @@ $('#optHideFeatureNames').live('change',function(){
 	}
 });
 
+var help_content;
+$.ajax({
+	url: 'help.html',
+	dataType: 'html',
+	success: function(data){
+		help_content = data;
+	},
+	error: function(){
+		alert("Unable to load help data");
+	}
+});
 var D_Help = {
+	title: 'Help &amp; About',
 	open: function(){},
-	content: "Strange Avenues &copy; 2011 Graham Cranfield",
+	content: help_content,
 	buttons: {
 		"Ok": function() {
 			$(this).dialog('close');

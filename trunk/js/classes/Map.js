@@ -47,7 +47,7 @@ var Map = function(){
 			case "right" : m.startLoc = startSquares[3]; break;
 			default: break;
 		}
-		me.location = m.type;
+		me.location = m;
 		me.coords = m.startLoc;
 		
 		// Set background color to match terrain
@@ -91,6 +91,8 @@ var Map = function(){
 				var occupado = [];
 			for(var bi=0; bi<locations.length; bi++){
 				var loc_type = locations[bi].type;
+				// Create "generated" property if not already
+				if(!loc_type.hasOwnProperty("generated")){ loc_type.generated=0; }
 				var total_locs_remaining = loc_type.maxi - loc_type.generated;
 				if(total_locs_remaining > 0){
 					var loc_max;
@@ -161,7 +163,7 @@ var Map = function(){
 		mapContainerCell.removeClass();
 		mapContainerCell.addClass(m.terr);
 		// Place player back on map
-		me.location = m.type;
+		me.location = m;
 		// Set current map identity
 		setIdent(m.id);
 		// Clear out the map container, add map grid back in
