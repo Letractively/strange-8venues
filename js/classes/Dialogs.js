@@ -23,6 +23,7 @@ var D_Loading = function(){
 
 var D_Welcome = {
 	title: 'Strange Avenues',
+	height: 200,
 	buttons: {
 		"Get on with it!": function() {
 			$(this).dialog('close');
