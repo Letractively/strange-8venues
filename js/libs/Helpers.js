@@ -28,7 +28,7 @@ var getSquareId = function(c){
 
 // Grid helpers
 var newGrid = function(){
-	return '<table id="'+ident+'_grid" cellspacing="0" cellpadding="0" class="m_grid '+me.location+'_grid"></table>';
+	return '<table id="'+ident+'_grid" cellspacing="0" cellpadding="0" class="m_grid '+me.location.type+'_grid"></table>';
 };
 var getGrid = function(){
 	return $('#'+ident+'_grid');
@@ -42,14 +42,13 @@ var getRow = function(r){
 	return  $('#'+ident+'_row_'+r);
 };
 
-// Center m within mapContainer
+// Centering things
 var centerIt = function(m){
 	m.css({
 		'top': (mapContainerCell.height()/2)-(m.height()/2),
 		'left': (mapContainerCell.width()/2)-(m.width()/2)
 	});
 };
-
 var centerOn = function(i){
 	var sq = getMapSq(i.coords);
 	var pageCenterX = mapContainerCell.width()/2;
@@ -72,7 +71,7 @@ var findAndRemove = function(sq, q, i){
 
 // Update global ident var
 var setIdent = function(i){
-	ident =  me.location + '_' + i;
+	ident =  me.location.type + '_' + i;
 };
 
 // Capitalize first letter
@@ -80,6 +79,11 @@ var capIt = function(s){
 	s = s.replace('_', ' ');
 	return s.charAt(0).toUpperCase() + s.slice(1);
 };
+
+// Remove any html tags
+var stripTags = function(s){
+ 	return s.replace(/<\/?[^>]+(>|$)/g, "");
+}
 
 // Reattach square references when loading a map
 var rebindSquares = function(){
@@ -89,7 +93,6 @@ var rebindSquares = function(){
 		bindMapLabel(sq[i]);
 	}
 };
-
 var bindMapLabel = function(s){
 	s.onMap.find('.t_label .l_minmax').click(function(){
 		var labelText = $(this).parent().find('.l_text');
@@ -121,24 +124,22 @@ var addMapLabel = function(s){
 	bindMapLabel(s);
 };
 
-// Dialog Alerts
-var D_Alert = function(){
-	this.openMe = function(t,s){
-		input.unbindFromMap();
-		oDialog.html(s);
-		oDialog.dialog({
-			close: function(){
-				input.bindToMap();
-			},
-			title: t,
-			modal: true,
-			zIndex: 5000
-		});
-	};
-	this.updateMe = function(s){
-		oDialog.html(s);
-	};
-	this.closeMe = function(){
-		oDialog.dialog('close');
-	};
+// Context replace strings for name and such
+var contextReplace = function(s){
+	var sr = s.replace('{name}', me.name);
+	return sr;
+}
+
+// Date & Time
+var Days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+var Months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+var addLeadingZero = function(num, isHours){
+		if(isHours){
+			if(num == 0){ num = 12; }
+			if(num > 12){ num -= 12; }
+		}
+		return ( num < 10 ? "0" : "" ) + num;  
+};
+var getAMPM = function(h){
+	return h > 11 ? "P<br/>M" : "A<br/>M";
 }

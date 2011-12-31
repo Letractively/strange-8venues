@@ -40,7 +40,7 @@ var Input = function(){
 		this.leaveLoc = function(){
 			if(activeMap.type != "overland") {
 				this.unbindFromMap();
-				var msg = 'Leave the ' + me.location + '?';
+				var msg = 'Leave ' + me.getLocation() + '?';
 				oDialog.html(msg);
 				oDialog.dialog({
 					close: function(){
@@ -57,12 +57,14 @@ var Input = function(){
 								Map.createContainer(activeMap);
 							}
 							$(this).dialog('close');
+							statuss.whereami();
+							Story.updateTime(true);
 						},
 						"N": function() {
 							$(this).dialog('close');
 						}
 					},
-					title: capIt(me.location),
+					title: capIt(me.getLocation()),
 					modal: true,
                     zIndex: 5000
 				});
@@ -76,6 +78,8 @@ var Input = function(){
 				previousMaps.push(activeMap);
 				Map.saveMe(activeMap);
 				LoadMap(sq);
+				statuss.whereami();
+				Story.updateTime(true);
 			}
 		};
 		
@@ -101,28 +105,48 @@ var Input = function(){
 			}
 		};
 	/*
-		Show / Hide dialogs
+		Dialogs (type, [content, title, buttons])
 	*/
-		var M_Dialog = function(type) {
+		this.M_Dialog = function(type, content, title, buttons) {
 			var M_D;
+			var M_D_title;
+			var M_D_buttons;
 			input.unbindFromMap();
 			switch(type){
 				case "inventory" 	: M_D = D_Inventory; break;
 				case "notes" 		: M_D = D_Notes; break;
 				case "options" 		: M_D = D_Options; break;
 				case "help" 		: M_D = D_Help; break;
+				case "welcome" 		: M_D = D_Welcome; break;
+				case "standard"		: M_D = D_Standard; break;
 				default: break;
 			}
-			oDialog.html(M_D.content);
+			if(type=="standard"){
+				oDialog.html(content);
+				M_D_title = title;
+				if(buttons) {
+					M_D_buttons = buttons;
+				} else {
+					M_D_buttons = {
+						"Ok": function() {
+							$(this).dialog('close');
+						}
+					}
+				}
+			} else {
+				oDialog.html(M_D.content);
+				M_D_title = M_D.title;
+				M_D_buttons = M_D.buttons;
+			}
 			oDialog.dialog({
 				open: M_D.open,
 				close: function(){
 					input.bindToMap();
 				},
-				buttons: M_D.buttons,
-				title: capIt(type),
+				buttons: M_D_buttons,
+				title: M_D_title,
 				modal: true,
-                                zIndex: 5000
+                zIndex: 5000
 			});
 		}
 	/*
@@ -162,11 +186,11 @@ var Input = function(){
 		});
 		
 		// Touch events
-		btnInventory.bind('click touchend', function(e){e.preventDefault(); M_Dialog('inventory');});
-		btnNotes.bind('click touchend', function(e){e.preventDefault(); M_Dialog('notes');});
+		btnInventory.bind('click touchend', function(e){e.preventDefault(); input.M_Dialog('inventory');});
+		btnNotes.bind('click touchend', function(e){e.preventDefault(); input.M_Dialog('notes');});
 		btnEnter.bind('click touchend', function(e){e.preventDefault(); input.enterLoc();});
-		btnOpts.bind('click touchend', function(e){e.preventDefault(); M_Dialog('options');});
-		btnHelp.bind('click touchend', function(e){e.preventDefault(); M_Dialog('help');});
+		btnOpts.bind('click touchend', function(e){e.preventDefault(); input.M_Dialog('options');});
+		btnHelp.bind('click touchend', function(e){e.preventDefault(); input.M_Dialog('help');});
 	
 		// Update Action Buttons
 		var updateBtnState = function(b, val){
@@ -222,10 +246,10 @@ var Input = function(){
 		// Re-center on window resize
 		$(window).resize(function(){
 			centerOn(me);
+			oDialog.dialog('option', 'position', 'center');
 		});
 		// Make everything unselectable
 		$('.m_grid td.lit .quad').bind('selectstart', function(){return false;});
-	
 	/*
 		Init
 	*/

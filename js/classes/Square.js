@@ -25,7 +25,8 @@ var Square = function(loc){
 			}
 		}
 		this.passable = this.t.passable;
-		this.onMap.find('.t').addClass(this.t.type);
+		this.buildings = this.t.buildings;
+		this.onMap.addClass(this.t.type);
 	};
 	
 	this.lookAround = function(r){
