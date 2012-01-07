@@ -25,7 +25,7 @@ var D_Welcome = {
 	title: 'Strange Avenues',
 	height: 200,
 	buttons: {
-		"Get on with it!": function() {
+		"Do you accept...cash?": function() {
 			$(this).dialog('close');
 			var story = $('#pick_a_case option:selected').val();
 			Story.load(story);
@@ -94,23 +94,23 @@ $('#optHideFeatureNames').live('change',function(){
 });
 
 var help_content;
+var D_Help;
 $.ajax({
 	url: 'help.html',
 	dataType: 'html',
 	success: function(data){
-		help_content = data;
+		D_Help = {
+			title: 'Help &amp; About',
+			open: function(){},
+			content: data,
+			buttons: {
+				"Ok": function() {
+					$(this).dialog('close');
+				}
+			}
+		}
 	},
 	error: function(){
 		alert("Unable to load help data");
 	}
 });
-var D_Help = {
-	title: 'Help &amp; About',
-	open: function(){},
-	content: help_content,
-	buttons: {
-		"Ok": function() {
-			$(this).dialog('close');
-		}
-	}
-}

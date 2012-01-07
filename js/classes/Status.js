@@ -67,7 +67,7 @@ var Statuss = function(){
 			_this.w.html(me.location.name + ' <a href="javascript:void(0);" id="btn_set_location_name">(chg)</a>' );
 			$('#btn_set_location_name').bind('click', {txt:me.location.name}, _this.setLocationName);
 		} else {
-			var name = capIt(me.getLocation());
+			var name = capIt(getLocation());
 			_this.w.html('<a href="javascript:void(0);" id="btn_set_location_name">'+ name +'</a>');
 			$('#btn_set_location_name').bind('click', {txt:name}, _this.setLocationName);
 		}
