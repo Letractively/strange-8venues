@@ -133,7 +133,6 @@ var Map = function(){
 		// Place player
 		me.currentSquare = getSquare(me.coords).id;
 		me.locIt(me.currentSquare, me.previousSquare);
-		me.updateStatus(me.coords);
 		
 		// Make active, live, receiving input
 		m.group.push(m);
@@ -202,7 +201,6 @@ var Map = function(){
 		
 		me.currentSquare = getSquare(me.coords).id;
 		me.locIt(me.currentSquare, m.lastPrev);
-		me.updateStatus(me.coords);
 		
 		// Center the map
 		centerOn(me);

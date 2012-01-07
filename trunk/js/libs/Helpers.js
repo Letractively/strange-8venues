@@ -26,6 +26,30 @@ var getSquareId = function(c){
 		} else { return false; }
 }
 
+// Get Location
+var getLocation = function(){
+	if(me.location.name != undefined){
+		return me.location.name;
+	} else {
+		return me.location.type;
+	}
+};
+
+// Light up squares	
+var lightUpLoc = function(loc){
+	var x = new Number(loc[0]);
+	var y = new Number(loc[1]);
+	var xSq = [x-1, x, x+1];
+	var ySq = [y-1, y, y+1];
+	for (i=0; i<ySq.length; i++){
+		for (j=0; j<xSq.length; j++){
+			var s = getMapSq([xSq[i],ySq[j]]);
+			s.removeClass('unlit');
+			s.addClass('lit');
+		}
+	}
+};
+
 // Grid helpers
 var newGrid = function(){
 	return '<table id="'+ident+'_grid" cellspacing="0" cellpadding="0" class="m_grid '+me.location.type+'_grid"></table>';

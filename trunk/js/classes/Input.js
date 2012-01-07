@@ -40,7 +40,7 @@ var Input = function(){
 		this.leaveLoc = function(){
 			if(activeMap.type != "overland") {
 				this.unbindFromMap();
-				var msg = 'Leave ' + me.getLocation() + '?';
+				var msg = 'Leave ' + getLocation() + '?';
 				oDialog.html(msg);
 				oDialog.dialog({
 					close: function(){
@@ -64,7 +64,7 @@ var Input = function(){
 							$(this).dialog('close');
 						}
 					},
-					title: capIt(me.getLocation()),
+					title: capIt(getLocation()),
 					modal: true,
                     zIndex: 5000
 				});
@@ -111,7 +111,7 @@ var Input = function(){
 			var M_D;
 			var M_D_title;
 			var M_D_buttons;
-			var M_D_height;
+                        var M_D_height;
 			input.unbindFromMap();
 			switch(type){
 				case "inventory" 	: M_D = D_Inventory; break;
@@ -139,13 +139,14 @@ var Input = function(){
 				M_D_title = M_D.title;
 				M_D_buttons = M_D.buttons;
 			}
-			if(M_D.hasOwnProperty("height")){ M_D_height = M_D.height; } else { M_D_height = "auto"; }
+                        if(M_D.height != undefined){ M_D_height = M_D.height; }
+                        else { M_D_height = "auto"; }
 			oDialog.dialog({
 				open: M_D.open,
 				close: function(){
 					input.bindToMap();
 				},
-				height: M_D_height,
+                                height: M_D_height,
 				buttons: M_D_buttons,
 				title: M_D_title,
 				modal: true,

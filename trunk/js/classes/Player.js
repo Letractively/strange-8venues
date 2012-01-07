@@ -4,26 +4,7 @@ var Player = function(name){
 	this.square;
 	this.inventory = [];
 	this.money;
-	this.getLocation = function(){
-		if(this.location.name != undefined){
-			return this.location.name;
-		} else {
-			return this.location.type;
-		}
-	};
-	this.lightUpLoc = function(loc){
-		var x = new Number(loc[0]);
-		var y = new Number(loc[1]);
-		var xSq = [x-1, x, x+1];
-		var ySq = [y-1, y, y+1];
-		for (i=0; i<ySq.length; i++){
-			for (j=0; j<xSq.length; j++){
-				var s = getMapSq([xSq[i],ySq[j]]);
-				s.removeClass('unlit');
-				s.addClass('lit');
-			}
-		}
-	};
+	
 	this.locIt = function(curr, prev){
 		// Set player position
 		var current = Squares[curr].onMap;
@@ -39,17 +20,10 @@ var Player = function(name){
 		findAndAdd(current, '.p', 'me');
 
 		// Show visible squares
-		this.lightUpLoc(loc);
+		lightUpLoc(loc);
 		
 		// Update buttons
 		input.updateActionButtons(Squares[curr]);
-	};
-	
-	this.updateStatus = function(c){
-		// Update actual location
-		var square = getSquare(c);
-		// Show what's on this square
-		//square.whatsHere();
 	};
 	this.move = function(dir){
 		var isPassable = true;
@@ -98,7 +72,6 @@ var Player = function(name){
 		if(isPassable == true){
 			this.lastDir = dir;
 			this.locIt(this.currentSquare, this.previousSquare);
-			this.updateStatus(this.coords);
 			// Set map position
 			centerOn(me);
 			// Update Time in Story

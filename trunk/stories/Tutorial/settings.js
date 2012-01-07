@@ -4,7 +4,39 @@
 	"setup": {
 		"startDate" : "Dec 29, 1934 00:00:00",
 		"startStatus" : "Well, {name}, here you are. Move around to trigger an event at 12:15 AM",
-		"startInventory": {}
+		"startInventory": {
+			"wallet": {
+				"money": 200
+			},
+			"phone": {
+				"num": 2119,
+				"contacts": [ "MrTodd", "MsPlitt"]
+			}
+		}
+	},
+	"characters": {
+		"MrTodd": {
+			"name": {
+				"full": "Drake Todd",
+				"formal": "Mr Todd",
+				"casual": "Drake"
+			},
+			"phone": 3434,
+			"dialog": {
+				"greeting": ["Hello, {name}!", "What's up?", "This is Mr Todd, are you the plumber?"]
+			}
+		},
+		"MsPlitt": {
+			"name": {
+				"full": "Lydia Plitt",
+				"formal": "Ms Plitt",
+				"casual": "Lydia"
+			},
+			"phone": 3434,
+			"dialog": {
+				"greeting": ["Oh hello, {name}!", "I have answered the phone, yes? I'm done.", "Ready to talk. Go!"]
+			}
+		}
 	},
 	"events":{
 		"time":{
