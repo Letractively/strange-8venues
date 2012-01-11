@@ -24,6 +24,7 @@ var D_Loading = function(){
 var D_Welcome = {
 	title: 'Strange Avenues',
 	height: 200,
+	width: 300,
 	buttons: {
 		"Do you accept...cash?": function() {
 			$(this).dialog('close');
@@ -50,6 +51,8 @@ var D_Notes = {
 	open: function(){
 		$('#notes').val(Data_Notes);
 	},
+	height: 400,
+	width: 400,
 	content: "<textarea id='notes'></textarea>",
 	buttons: {
 		"Save": function() {
@@ -67,6 +70,8 @@ var D_Options = {
 	open: function(){
 		$('#optHideFeatureNames').attr('checked', hideFeatureNames);
 	},
+	height: 200,
+	width: 200,
 	content: "\
 		<input id='optHidePlaceNames' type='checkbox' disabled/><label for='optHidePlaceNames' disabled>Hide Place Names</label><br/>\
 		<input id='optHideFeatureNames' type='checkbox'/><label for='optHideFeatureNames'>Hide Feature Names</label>\
@@ -103,6 +108,8 @@ $.ajax({
 			title: 'Help &amp; About',
 			open: function(){},
 			content: data,
+			height: 400,
+			width: 400,
 			buttons: {
 				"Ok": function() {
 					$(this).dialog('close');
