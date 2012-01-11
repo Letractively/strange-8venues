@@ -43,6 +43,7 @@ var Input = function(){
 				var msg = 'Leave ' + getLocation() + '?';
 				oDialog.html(msg);
 				oDialog.dialog({
+                                                height: 'auto', width: 'auto',
 					close: function(){
 						input.bindToMap();
 					},
@@ -112,6 +113,7 @@ var Input = function(){
 			var M_D_title;
 			var M_D_buttons;
                         var M_D_height;
+                        var M_D_width;
 			input.unbindFromMap();
 			switch(type){
 				case "inventory" 	: M_D = D_Inventory; break;
@@ -141,12 +143,15 @@ var Input = function(){
 			}
                         if(M_D.height != undefined){ M_D_height = M_D.height; }
                         else { M_D_height = "auto"; }
+                        if(M_D.width != undefined){ M_D_width = M_D.width; }
+                        else { M_D_width = "auto"; }
 			oDialog.dialog({
 				open: M_D.open,
 				close: function(){
 					input.bindToMap();
 				},
                                 height: M_D_height,
+                                width: M_D_width,
 				buttons: M_D_buttons,
 				title: M_D_title,
 				modal: true,
